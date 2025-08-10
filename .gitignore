@@ -1,5 +1,6 @@
-# Ignore virtual environments
+# Virtual environments
 venv/
+.venv/
 diabetes_streamlit_app/venv/
 diabetes-analytics-backend/venv/
 
