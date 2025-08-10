@@ -3,8 +3,14 @@ import os
 import math
 import requests
 import pandas as pd
+import streamlit as st  # NEW
 
-API = os.getenv("API_BASE", "http://127.0.0.1:8000")
+# Prefer Streamlit secret, then env var, then localhost (for local dev)
+API = (
+    st.secrets.get("BACKEND_URL")
+    or os.getenv("API_BASE")
+    or "http://127.0.0.1:8000"
+).rstrip("/")  # keep it clean for f"{API}/..."
 
 def get_health():
     return requests.get(f"{API}/health", timeout=20)
