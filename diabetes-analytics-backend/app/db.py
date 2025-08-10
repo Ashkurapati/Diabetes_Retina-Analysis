@@ -1,13 +1,20 @@
 import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
+from dotenv import load_dotenv, find_dotenv
 
-# Expect the full MySQL URL in an env var (works locally via .env and on Render)
+# Load .env (works locally)
+env_path = find_dotenv()
+if env_path:
+    load_dotenv(env_path)
+else:
+    load_dotenv()
+
 MYSQL_URI = os.getenv("MYSQL_URI")
 if not MYSQL_URI:
     raise RuntimeError(
-        "MYSQL_URI environment variable is missing. Set it to your hosted database URL "
-        "(e.g., mysql+pymysql://USER:PASSWORD@HOST:3306/DB?charset=utf8mb4)."
+        "MYSQL_URI is missing. Put it in a .env file or set it in the environment. "
+        "Example: mysql+pymysql://root:Thulasi132003@127.0.0.1:3306/retina_data?charset=utf8mb4"
     )
 
 engine = create_engine(MYSQL_URI, pool_pre_ping=True, pool_recycle=3600)
